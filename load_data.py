@@ -59,7 +59,7 @@ X_eval_important = X_eval_processed[:, important_features]
 print("\nCreating polynomial features for important features...")
 important_pipeline = Pipeline([
     ('imputer', SimpleImputer(strategy='mean')),
-    ('poly', PolynomialFeatures(degree=2, include_bias=False))
+    ('poly', PolynomialFeatures(degree=2, include_bias=False, interaction_only=False))  # Reduced degree back to 2
 ])
 
 # Transform important features
@@ -91,9 +91,9 @@ X_train_scaled = scaler.fit_transform(X_train_combined)
 X_test_scaled = scaler.transform(X_test_combined)
 X_eval_scaled = scaler.transform(X_eval_combined)
 
-# Feature selection using LassoCV
+# Feature selection using LassoCV with a range of alphas
 print("\nPerforming feature selection...")
-lasso = LassoCV(cv=5, random_state=42)
+lasso = LassoCV(cv=5, random_state=42, alphas=np.logspace(-4, 4, 100))  # Specifying a range of alpha values
 selector = SelectFromModel(lasso, prefit=False)
 
 # Create final pipeline

@@ -1,0 +1,49 @@
+Technical Report: Regression Analysis
+
+1. Data Analysis
+The dataset consists of:
+- 800 training samples with 100 features each
+- 200 evaluation samples with the same feature set
+- Features include both categorical (language codes) and numerical values
+- First 10 features are categorical (language codes like 'cz', 'en', 'it', etc.)
+- Remaining 90 features are numerical with varying scales
+
+2. Methodology
+The solution implements a Linear Regression model with the following preprocessing steps:
+a) Categorical Encoding:
+   - Label encoding for categorical features (language codes)
+   - Ensures consistent encoding between training and evaluation data
+b) Feature Scaling:
+   - StandardScaler applied to normalize all features
+   - Helps prevent features with larger scales from dominating the model
+c) Train-Test Split:
+   - 80% training data, 20% test data
+   - Enables model performance evaluation on unseen data
+
+3. Model Selection
+Linear Regression was chosen for several reasons:
+- Interpretability: Coefficients directly indicate feature importance
+- Performance: Achieved good R² scores (Training: 0.8286, Test: 0.7636)
+- Stability: Small gap between training and test performance indicates good generalization
+- Efficiency: Fast training and prediction times
+
+4. Results Discussion
+The model achieved:
+- Training R² score: 0.8286 (82.86% variance explained)
+- Test R² score: 0.7636 (76.36% variance explained)
+
+Top influential features (by absolute coefficient value):
+1. Feature_87: 106.37
+2. Feature_68: 98.87
+3. Feature_34: 94.77
+4. Feature_42: 93.82
+5. Feature_97: 85.18
+
+The relatively small difference between training and test scores (0.065) suggests the model is not overfitting significantly.
+
+5. Conclusion
+The Linear Regression model demonstrates strong predictive performance with R² scores above 0.75 on both training and test sets. The model successfully captures the relationships between the input features and the target variable while maintaining good generalization to unseen data.
+
+The feature importance analysis reveals that certain numerical features (particularly features 87, 68, and 34) have the strongest influence on predictions, while the categorical language features have relatively lower impact.
+
+The model's predictions have been saved in 'y_predikcia.npy' for the evaluation dataset, ready for deployment or further analysis.

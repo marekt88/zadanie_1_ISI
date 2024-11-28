@@ -19,7 +19,7 @@ print("Shape of X_public:", X_public.shape)
 print("Shape of y_public:", y_public.shape)
 print("Shape of X_eval:", X_eval.shape)
 
-# Convert numpy arrays to pandas DataFrames
+# Convert numpy arrays to pandas DataFrames for easier handling
 X_public_df = pd.DataFrame(X_public)
 X_eval_df = pd.DataFrame(X_eval)
 
@@ -136,12 +136,9 @@ print("\nPredictions saved successfully.")
 print("Shape of predictions:", loaded_pred.shape)
 print("First 5 predictions:", loaded_pred[:5])
 
-# Get feature names
-remaining_feature_names = [f"Original_{i}" for i in remaining_features]
-poly_feature_names = [f"Poly_{i}" for i in range(X_train_poly.shape[1])]
-feature_names = remaining_feature_names + poly_feature_names
-
 # Get feature importance for selected features
+feature_names = ([f"Original_{i}" for i in range(X_public.shape[1])] + 
+                [f"Poly_{i}" for i in range(X_train_poly.shape[1])])
 selected_features = np.array(feature_names)[selected_features_mask]
 coefficients = pipeline.named_steps['regressor'].coef_[selected_features_mask]
 

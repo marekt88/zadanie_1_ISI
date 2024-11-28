@@ -139,11 +139,12 @@ print("First 5 predictions:", loaded_pred[:5])
 # Get feature importance for selected features
 feature_names = ([f"Original_{i}" for i in range(X_public.shape[1])] + 
                 [f"Poly_{i}" for i in range(X_train_poly.shape[1])])
-selected_features = np.array(feature_names)[selected_features_mask]
-coefficients = pipeline.named_steps['regressor'].coef_[selected_features_mask]
+# Adjusting the feature names to match the selected features
+selected_feature_names = np.array(feature_names)[:len(selected_features_mask)][selected_features_mask]
+coefficients = pipeline.named_steps['regressor'].coef_
 
 importance_df = pd.DataFrame({
-    'Feature': selected_features,
+    'Feature': selected_feature_names,
     'Coefficient': coefficients
 })
 importance_df['Abs_Coefficient'] = abs(importance_df['Coefficient'])
